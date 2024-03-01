@@ -1,0 +1,152 @@
+basePath: /
+definitions:
+  models.Account:
+    properties:
+      balance:
+        type: number
+      id:
+        type: integer
+    type: object
+  models.CreateAccount:
+    properties:
+      amount:
+        type: number
+    type: object
+  models.DepositFunds:
+    properties:
+      amount:
+        type: number
+    type: object
+  models.WithdrawFunds:
+    properties:
+      amount:
+        type: number
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Swagger API for REST API Service.
+  title: REST API Service
+  version: "1.0"
+paths:
+  /api/accounts:
+    post:
+      consumes:
+      - application/json
+      operationId: account-create
+      parameters:
+      - description: amount of money on the new account
+        in: body
+        name: amount
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateAccount'
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad request
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      security:
+      - ApiKeyAuth: []
+      summary: Create a user account with given balance
+      tags:
+      - Accounts
+  /api/accounts/{id}:
+    get:
+      operationId: account-get
+      parameters:
+      - description: account id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Account info
+          schema:
+            $ref: '#/definitions/models.Account'
+        "400":
+          description: Bad request
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      security:
+      - ApiKeyAuth: []
+      summary: Get a user account information by its ID
+      tags:
+      - Accounts
+  /api/accounts/deposit/{id}:
+    put:
+      consumes:
+      - application/json
+      operationId: account-deposit
+      parameters:
+      - description: account id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: amount of money
+        in: body
+        name: amount
+        required: true
+        schema:
+          $ref: '#/definitions/models.DepositFunds'
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad request
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      security:
+      - ApiKeyAuth: []
+      summary: Deposit funds to an account and add en entry to the transfers table
+      tags:
+      - Accounts
+  /api/accounts/withdraw/{id}:
+    put:
+      consumes:
+      - application/json
+      operationId: account-withdraw
+      parameters:
+      - description: account id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: amount of money
+        in: body
+        name: amount
+        required: true
+        schema:
+          $ref: '#/definitions/models.WithdrawFunds'
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad request
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal server error
+      security:
+      - ApiKeyAuth: []
+      summary: Withdraw funds from an account and add en entry to the transfers table
+      tags:
+      - Accounts
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
