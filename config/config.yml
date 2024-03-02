@@ -1,0 +1,10 @@
+env: local
+
+apiKey: PXN7uvIrcr2N5uQl7J>V(:2Q<ha26Aoe]#5HFF"^$0*EFO^GVvGq[l]EC?a:5*^ # Replace on your ApiKey
+
+server:
+  host: localhost
+  port: 8080
+
+db:
+  DSN: postgresql://postgres:0000@localhost:5432/postgres?sslmode=disable

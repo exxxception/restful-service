@@ -10,12 +10,14 @@ import (
 )
 
 type Handlers struct {
-	services *services.Services
+	services   *services.Services
+	apiAuthKey string
 }
 
-func NewHandlers(services *services.Services) *Handlers {
+func NewHandlers(services *services.Services, apiAuthKey string) *Handlers {
 	return &Handlers{
-		services: services,
+		services:   services,
+		apiAuthKey: apiAuthKey,
 	}
 }
 

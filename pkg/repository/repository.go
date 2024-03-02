@@ -19,8 +19,8 @@ type Repository struct {
 	Accounts
 }
 
-func NewRepository() *Repository {
-	repo, err := postgres.NewPostgresDB()
+func NewRepository(dsn string) *Repository {
+	repo, err := postgres.NewPostgresDB(dsn)
 	if err != nil {
 		log.Fatal(err)
 		os.Exit(1)

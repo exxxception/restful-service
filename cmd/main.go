@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/exxxception/restful-service/internal/config"
 	"github.com/exxxception/restful-service/internal/handlers"
 	"github.com/exxxception/restful-service/internal/http_server"
 	"github.com/exxxception/restful-service/internal/services"
@@ -21,12 +22,14 @@ import (
 // @in							header
 // @name						Authorization
 func main() {
-	repos := repository.NewRepository()
+	cfg := config.LoadConfig()
+
+	repos := repository.NewRepository(cfg.DB.DSN)
 	services := services.NewServices(repos)
-	handlers := handlers.NewHandlers(services)
+	handlers := handlers.NewHandlers(services, cfg.ApiKey)
 
 	srv := new(http_server.Server)
-	if err := srv.Run("8080", handlers.InitRoutes()); err != nil {
+	if err := srv.Run(cfg.Server.Port, handlers.InitRoutes()); err != nil {
 		log.Fatalf("error occured while running http server: %s", err.Error())
 		os.Exit(1)
 	}

@@ -16,10 +16,8 @@ type PostgresDB struct {
 	db *sqlx.DB
 }
 
-func NewPostgresDB() (*PostgresDB, error) {
-	uriCon := "host=localhost port=5432 user=postgres dbname=postgres password=0000 sslmode=disable"
-
-	db, err := sqlx.Open("postgres", uriCon)
+func NewPostgresDB(dsn string) (*PostgresDB, error) {
+	db, err := sqlx.Open("postgres", dsn)
 	if err != nil {
 		return nil, err
 	}

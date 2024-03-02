@@ -6,8 +6,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-const apiKeyAuth = "7h1sI$ApiK3y"
-
 type HTTPError struct {
 	Code    int    `json:"code"`
 	Message string `json:"message"`
@@ -24,7 +22,7 @@ func (h *Handlers) userIdentity(c *gin.Context) {
 		return
 	}
 
-	if header != apiKeyAuth {
+	if header != h.apiAuthKey {
 		c.JSON(http.StatusUnauthorized, HTTPError{
 			Code:    http.StatusUnauthorized,
 			Message: "invalid auth header",
